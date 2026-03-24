@@ -27,7 +27,8 @@ public class AuthService {
         user.setEmail(req.email());
         user.setName(req.name());
         user.setPassword(passwordEncoder.encode(req.password()));
-        user.setRole("USER");
+        String requestedRole = req.role() == null ? "" : req.role().trim();
+        user.setRole(requestedRole.isEmpty() ? "USER" : requestedRole.toUpperCase());
 
         userRepository.save(user);
     }
